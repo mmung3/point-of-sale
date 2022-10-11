@@ -13,6 +13,8 @@ class ProductListTest {
     private Product pears;
     private Product banana;
     private Product watermelon;
+    private Product paperBag;
+    private Product canvasBag;
 
     // the numbers 'one', 'four' feature products added in the order they
     // are listed in setup()
@@ -27,6 +29,8 @@ class ProductListTest {
         pears = new Product("pears", 2002, 4.50);
         banana = new Product("banana", 2003, 5.75);
         watermelon = new Product("watermelon", 2004, 14.00);
+        paperBag = new Product("paper bag", 1001, 0.10);
+        canvasBag = new Product("canvas bag", 1002, 0.25);
 
         noItems = new ProductList();
 
@@ -50,7 +54,7 @@ class ProductListTest {
     }
 
     @Test
-    public void testAddOne() {
+    public void testAddOneApple() {
         ArrayList<String> applesList = new ArrayList<>();
         applesList.add("apples");
 
@@ -58,6 +62,33 @@ class ProductListTest {
 
         assertEquals(applesList, noItems.getNameList());
         assertEquals(2.00, noItems.getTotal());
+    }
+
+    @Test
+    public void testAddTwoApples() {
+        ArrayList<String> twoApplesList = new ArrayList<>();
+        twoApplesList.add("apples");
+        twoApplesList.add("apples");
+
+        noItems.addProduct(apples);
+        noItems.addProduct(apples);
+
+        assertEquals(twoApplesList, noItems.getNameList());
+        assertEquals(4.00, noItems.getTotal());
+
+    }
+
+    @Test
+    public void testAddBothBags() {
+        ArrayList<String> bagList = new ArrayList<>();
+        bagList.add("paper bag");
+        bagList.add("canvas bag");
+
+        noItems.addProduct(paperBag);
+        noItems.addProduct(canvasBag);
+
+        assertEquals(bagList, noItems.getNameList());
+        assertEquals(0.35, noItems.getTotal());
     }
 
     @Test

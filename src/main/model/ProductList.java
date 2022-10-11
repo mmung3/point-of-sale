@@ -35,6 +35,8 @@ public class ProductList {
         return nameListSoFar;
     }
 
+    // GETTERS ====
+
     // EFFECTS: returns size of a ProductList, mainly used for testing
     public int getLength() {
         return productList.size();

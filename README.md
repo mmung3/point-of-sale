@@ -22,7 +22,7 @@ my total cost change accordingly
 - as a user, I want to remove items that I no longer
 wish to purchase
 - as a user, I wish to specify the amount of paper
-(or fabric) bags that I used in my purchase, with associated
+(or canvas) bags that I used in my purchase, with associated
 costs seen
 - as a user, I want to see the total cost shown with each
 'change' *(adding an item, removing an item, 
