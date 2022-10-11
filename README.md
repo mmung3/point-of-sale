@@ -1,25 +1,34 @@
-# Minesweeper
+# Point of Sale
 
 ### What is this project?
-This project will encompass a program capable of running 
-the game **Minesweeper**, similar to the one commonly 
-seen on old *Windows XP* (or even older versions) devices.
-The completed project will allow any user to be able to 
-play the game as they desire. 
+
+This project will run a check-out system commonly seen in
+a grocery or convenience store. It will be modelled after
+a **self-checkout** system (for a *customer* to use), 
+although it could also be run by a *human* cashier.
 
 ### Inspiration
 
-Since playing the game as a kid, I was always
-curious as to how the computer was able to generate and
-run the game in the way it did. This project will allow me
-to explore the construction and process, behind the scenes.
+Having worked in retail previously, the poor design of some
+systems infuriated my co-workers and I. With this project
+I will explore the design of a more functional and
+effective point of sale.
 
 ### User Stories
 Some examples include:
-- As a user, I wish to see safe tiles uncovered upon my input 
-(ex. by mouse press or grid selection)
-- As a user, I wish to add as many flags as I want
-placed onto the tile(s) of my choosing
-- As a user, I want to see the game end if I select a mine
-- As a user, I want to see the game state saved whenever I 
-may decide to save my progress
+- as a user, I want to add items that are on the
+catalogue to my current collection of items, and see
+my total cost change accordingly
+- as a user, I want to remove items that I no longer
+wish to purchase
+- as a user, I wish to specify the amount of paper
+(or fabric) bags that I used in my purchase, with associated
+costs seen
+- as a user, I want to see the total cost shown with each
+'change' *(adding an item, removing an item, 
+adding a bag, etc.)* made to my order
+- as a user, I want to see my amount of change calculated
+correctly based on a cash amount I will give
+- as a user, I want to enter a validly formatted card
+number and PIN to complete the purchase
+
