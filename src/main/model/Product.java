@@ -1,9 +1,9 @@
 package model;
 
 public class Product {
-    private String name;
-    private int id;
-    private double price;
+    private final String name;
+    private final int id;
+    private final double price;
 
     // REQUIRES: id is 4 digits, price > 0
     public Product(String name, int id, double price) {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ProductList {
 
-    private ArrayList<Product> productList;
+    private final ArrayList<Product> productList;
 
     public ProductList() {
         productList = new ArrayList<>();
@@ -19,8 +19,8 @@ public class ProductList {
     public double getTotal() {
         double totalSoFar = 0;
 
-        for (Product p : productList) {
-            totalSoFar += p.getPrice();
+        for (Product pr : productList) {
+            totalSoFar += pr.getPrice();
         }
         return totalSoFar;
     }
@@ -35,12 +35,22 @@ public class ProductList {
         return nameListSoFar;
     }
 
-    // GETTERS ====
+    // EFFECTS: returns a list of the IDs of items currently in queue
+    public ArrayList<Integer> getIdList() {
+        ArrayList<Integer> idListSoFar = new ArrayList<>();
 
-    // EFFECTS: returns size of a ProductList, mainly used for testing
-    public int getLength() {
-        return productList.size();
+        for (Product p : productList) {
+            idListSoFar.add(p.getId());
+        }
+        return idListSoFar;
     }
+
+    // EFFECTS: returns a Product associated with a given index
+    public Product getProductFromIdIndex(int index) {
+        return productList.get(index);
+    }
+
+    // GETTERS ====
 
     // EFFECTS: adds a product to the list of Products
     public void addProduct(Product product) {
@@ -51,5 +61,6 @@ public class ProductList {
     public void removeProduct(Product product) {
         productList.remove(product);
     }
+
 
 }

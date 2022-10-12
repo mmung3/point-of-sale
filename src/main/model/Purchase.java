@@ -2,9 +2,8 @@ package model;
 
 public class Purchase {
 
-    private boolean card; // determines what method the user is paying by
-    private double amount;
-    private double preRoundedAmount;
+    private final boolean card; // determines what method the user is paying by
+    private final double amount;
 
     public Purchase(double amount, boolean card) {
         this.amount = amount;
@@ -17,6 +16,8 @@ public class Purchase {
     //          Returns 0 if the cashGiven is exactly the amount
     //          Returns the change otherwise
     public double calculateChange(double cashGiven) {
+        double preRoundedAmount;
+
         if (amount > cashGiven) {
             return -1; // handle the case of insufficient amount in UI
         } else if (amount == cashGiven) {

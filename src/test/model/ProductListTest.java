@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,6 +22,7 @@ class ProductListTest {
     private ProductList noItems;
     private ProductList oneItem;
     private ProductList fourItems;
+    private ProductList allProductsList;
 
     @BeforeEach
     public void setup() {
@@ -43,6 +45,16 @@ class ProductListTest {
         fourItems.addProduct(oranges);
         fourItems.addProduct(pears);
         fourItems.addProduct(banana);
+
+        allProductsList = new ProductList();
+
+        allProductsList.addProduct(apples);
+        allProductsList.addProduct(oranges);
+        allProductsList.addProduct(pears);
+        allProductsList.addProduct(banana);
+        allProductsList.addProduct(watermelon);
+        allProductsList.addProduct(paperBag);
+        allProductsList.addProduct(canvasBag);
     }
 
     @Test
@@ -142,5 +154,18 @@ class ProductListTest {
 
         assertEquals(pearsWatermelonList, noItems.getNameList());
         assertEquals(18.50, noItems.getTotal());
+    }
+
+    @Test
+    public void testGetIdList() {
+        ArrayList<Integer> correctIdList = new ArrayList<>(Arrays.asList(2000, 2001, 2002, 2003, 2004, 1001, 1002));
+
+        assertEquals(correctIdList, allProductsList.getIdList());
+    }
+
+    @Test
+    public void testGetProductFromIndex() {
+        assertEquals(apples.getName(), allProductsList.getProductFromIdIndex(0).getName());
+        assertEquals(0.1, allProductsList.getProductFromIdIndex(5).getPrice());
     }
 }
