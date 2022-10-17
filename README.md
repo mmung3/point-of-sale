@@ -16,9 +16,9 @@ effective point of sale.
 
 ### User Stories
 Some examples include:
-- as a user, I want to add items that are on the
-catalogue to my current collection of items
-- as a user, I want to remove items that I no longer
+- as a user, I want to add products that are on the
+catalogue to my current collection of products
+- as a user, I want to remove products that I no longer
 wish to purchase
 - as a user, I wish to specify the amount of paper
 (or canvas) bags that I used in my purchase, with associated
