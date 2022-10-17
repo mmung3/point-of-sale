@@ -16,13 +16,10 @@ effective point of sale.
 
 ### User Stories
 Some examples include:
-- as a user, I want to add products that are on the
-catalogue to my current collection of products
+- as a user, I want to add products (including bags) that are on the
+catalogue to my current list of items
 - as a user, I want to remove products that I no longer
 wish to purchase
-- as a user, I wish to specify the amount of paper
-(or canvas) bags that I used in my purchase, with associated
-costs seen
 - as a user, I want to see my amount of change calculated
 correctly based on a cash amount I will give
 - as a user, I want to enter a validly formatted card

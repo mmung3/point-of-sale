@@ -90,7 +90,6 @@ public class PointOfSale extends PointOfSaleTool {
     // EFFECTS: if the user enters remove mode, will remove the product from the product list based off the id
     public void handleRemove() {
         boolean foundItem = false;
-        Product productToRemove;
 
         System.out.println("\n[REMOVE MODE] Enter the ID of an item you wish to remove: ");
         String potentialValidId = handleInputScanner();
@@ -105,10 +104,11 @@ public class PointOfSale extends PointOfSaleTool {
                 if (userIdToRemove == itemId) {
                     foundItem = true;
                     int index = allUserIdOnly.indexOf(itemId);
-                    productToRemove = userProductList.getProductFromIdIndex(index);
+                    Product productToRemove = userProductList.getProductFromIdIndex(index);
                     userProductList.removeProduct(productToRemove);
 
                     printRemoveSuccessMessage(productToRemove);
+                    break;
                 }
             }
             if (!foundItem) { // could not find the ID

@@ -114,8 +114,8 @@ public class PointOfSaleTool {
     // EFFECTS: prints out the success message for a purchase involving a card
     protected void printPinSuccessMessage(Purchase pch) {
         System.out.println("\n================================================");
-        System.out.println("TOTAL: $" + pch.getAmount());
-        System.out.println("AMOUNT CHARGED: $" + pch.getAmount());
+        System.out.println("TOTAL: $" + df.format(pch.getAmount()));
+        System.out.println("AMOUNT CHARGED: $" + df.format(pch.getAmount()));
         System.out.println("================================================\n");
         System.out.println("THANK YOU FOR SHOPPING");
     }
