@@ -65,7 +65,6 @@ public class PointOfSale extends PointOfSaleTool {
     // EFFECTS: looks for a given ID within the master list of IDs. If found, adds the Product associated
     //          with the ID to userProductsList, otherwise asks for a correct ID or command
     public void understandId(int userId) {
-        int index;
         Product productToAdd;
         boolean foundItem = false;
 
@@ -74,7 +73,7 @@ public class PointOfSale extends PointOfSaleTool {
         for (int itemId : allProductsIdOnly) { // search the list of IDs for the ID the user gives
             if (userId == itemId) { // i.e. does the ID the user gave match one in the full catalogue
                 foundItem = true;
-                index = allProductsIdOnly.indexOf(itemId);
+                int index = allProductsIdOnly.indexOf(itemId);
                 productToAdd = allProductsList.getProductFromIdIndex(index);
                 userProductList.addProduct(productToAdd);
 
@@ -152,8 +151,6 @@ public class PointOfSale extends PointOfSaleTool {
     //          for the customer as required, ending the program. If the amount provided is insufficient, the
     //          user is returned to the main menu and prompted to remove items and re-enter the total screen.
     public void handleCash(Purchase pch) {
-        double customerAmount;
-        double change;
         double totalCash = pch.getAmount();
 
         printCashIntroMessage(totalCash);
@@ -164,8 +161,8 @@ public class PointOfSale extends PointOfSaleTool {
         }
 
         try { // try converting the user input to a double
-            customerAmount = Integer.parseInt(potentialCustomerAmount);
-            change = pch.calculateChange(customerAmount);
+            double customerAmount = Double.parseDouble(potentialCustomerAmount);
+            double change = pch.calculateChange(customerAmount);
 
             if (change >= 0) {
                 printChangeSuccessMessage(pch, customerAmount, change);

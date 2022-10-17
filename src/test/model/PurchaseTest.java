@@ -30,6 +30,9 @@ class PurchaseTest {
 
     @Test
     public void testCalculateChange() {
+        assertEquals(0, purchase25Cash.calculateChange(25));
+        assertEquals(-1, purchase25Cash.calculateChange(2));
+
         assertEquals(25, purchase25Cash.calculateChange(50));
         assertEquals(1.01, purchase2Dollars99CentsCash.calculateChange(4.00));
     }

@@ -66,6 +66,15 @@ class ProductListTest {
     }
 
     @Test
+    public void testGetProductList() {
+        assertEquals(4, fourItems.getProductList().size());
+        assertEquals(7, allProductsList.getProductList().size());
+
+        assertTrue(oneItem.getProductList().contains(apples));
+        assertTrue(allProductsList.getProductList().contains(canvasBag));
+    }
+
+    @Test
     public void testAddOneApple() {
         ArrayList<String> applesList = new ArrayList<>();
         applesList.add("apples");
