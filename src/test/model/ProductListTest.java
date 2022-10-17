@@ -72,7 +72,6 @@ class ProductListTest {
 
         noItems.addProduct(apples);
 
-        // todo: look into using .equals() in place of ==
         assertEquals(applesList, noItems.getNameList());
         assertEquals(2.00, noItems.getTotal());
     }

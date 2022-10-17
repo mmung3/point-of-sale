@@ -6,19 +6,17 @@ import model.Purchase;
 
 import java.util.ArrayList;
 
+// The Main class for this project, handling the majority of actions that the user will see on the UI.
 public class PointOfSale extends PointOfSaleTool {
 
     public PointOfSale() {
         loadAllProductsList();
-
         welcomeMessage();
-
         handleUserCommand();
     }
 
-    // todo: convert badly formatted but valid strings
     // EFFECTS: understands the users' input. Sends to understandId() or understandCommand() if
-    //          it can be successfully converted to int (i.e. it is an ID). Currently is caps sensitive
+    //          it can be successfully converted to int (i.e. it is an ID). Currently, exact strings are required:
     //          (ex. 'Remove', 'toTAL', '1 001' are invalid [should be 'remove', 'total', or '1001'])
     public void handleUserCommand() {
         printAfterActionMessage();
@@ -49,13 +47,16 @@ public class PointOfSale extends PointOfSaleTool {
                 case TOTAL_CMD:
                     handleTotal();
                     break;
+                case CATALOGUE_CMD:
+                    printCatalogue();
+                    printAfterActionMessage();
+                    break;
                 case QUIT_CMD:
                     System.out.println("\nQuitting...");
                     running = false;
                     break;
                 default:
                     System.out.println("\n\t Invalid command, try again: ");
-                    break;
             }
         }
     }
@@ -86,20 +87,17 @@ public class PointOfSale extends PointOfSaleTool {
         printAfterActionMessage();
     }
 
-    // todo: consider abstracting the scanner and removal function. See understandId() for more
     // MODIFIES: userProductList
     // EFFECTS: if the user enters remove mode, will remove the product from the product list based off the id
     public void handleRemove() {
         boolean foundItem = false;
-        int index;
-        int userIdToRemove;
         Product productToRemove;
 
         System.out.println("\n[REMOVE MODE] Enter the ID of an item you wish to remove: ");
         String potentialValidId = handleInputScanner();
 
         try { // try converting the user input to an int if it is an ID
-            userIdToRemove = Integer.parseInt(potentialValidId);
+            int userIdToRemove = Integer.parseInt(potentialValidId);
 
             // Begin removal function if try was successful
             ArrayList<Integer> allUserIdOnly = userProductList.getIdList();
@@ -107,7 +105,7 @@ public class PointOfSale extends PointOfSaleTool {
             for (int itemId : allUserIdOnly) { // search the list of IDs for the ID the user gives
                 if (userIdToRemove == itemId) {
                     foundItem = true;
-                    index = allUserIdOnly.indexOf(itemId);
+                    int index = allUserIdOnly.indexOf(itemId);
                     productToRemove = userProductList.getProductFromIdIndex(index);
                     userProductList.removeProduct(productToRemove);
 
@@ -115,8 +113,7 @@ public class PointOfSale extends PointOfSaleTool {
                 }
             }
             if (!foundItem) { // could not find the ID
-                System.out.println("\n\t Could not find any item with ID \""
-                        + userIdToRemove + "\", leaving [REMOVE MODE]");
+                printRemoveFailureMessage(userIdToRemove);
             }
         } catch (NumberFormatException e) { // otherwise, it is a command
             System.out.println("\n\t Invalid ID, try again: ");
@@ -128,20 +125,22 @@ public class PointOfSale extends PointOfSaleTool {
     public void handleTotal() {
         Purchase thisPurchase;
 
-        printTotalIntroMessage(userTotal);
+        printTotalIntroMessage(getUserTotal());
         String userCashCardChoice = handleInputScanner();
 
         while (running) {
             if (userCashCardChoice.equals("cash")) {
-                thisPurchase = new Purchase(userTotal, false);
+                thisPurchase = new Purchase(getUserTotal(), false);
                 handleCash(thisPurchase);
                 running = false;
                 break;
             } else if (userCashCardChoice.equals("card")) {
-                thisPurchase = new Purchase(userTotal, true);
+                thisPurchase = new Purchase(getUserTotal(), true);
                 handleCard(thisPurchase);
                 running = false;
                 break;
+            } else if (userCashCardChoice.equals("back")) {
+                handleUserCommand();
             } else {
                 System.out.println("\n\t Invalid selection, try again: ");
                 handleTotal();
@@ -149,13 +148,20 @@ public class PointOfSale extends PointOfSaleTool {
         }
     }
 
-    // todo: remove redundant code, documentation
+    // EFFECTS: handles payment if the user has decided to pay with cash. Will accept payment and print the change
+    //          for the customer as required, ending the program. If the amount provided is insufficient, the
+    //          user is returned to the main menu and prompted to remove items and re-enter the total screen.
     public void handleCash(Purchase pch) {
         double customerAmount;
         double change;
+        double totalCash = pch.getAmount();
 
-        printCashIntroMessage(pch);
+        printCashIntroMessage(totalCash);
         String potentialCustomerAmount = handleInputScanner();
+
+        if (potentialCustomerAmount.equals("back")) {
+            handleTotal();
+        }
 
         try { // try converting the user input to a double
             customerAmount = Integer.parseInt(potentialCustomerAmount);
@@ -169,7 +175,6 @@ public class PointOfSale extends PointOfSaleTool {
             } else {
                 System.out.println("Unexpected Error");
             }
-
         } catch (NumberFormatException e) { // user did not provide a valid amount
             System.out.println("\n\tInvalid amount, try again: ");
             handleCash(pch);
@@ -177,30 +182,43 @@ public class PointOfSale extends PointOfSaleTool {
     }
 
 
-    // todo: massively room to remove redundancy here, documentation
+    // EFFECTS: handles payment if the user decided to pay with card. If the card number they give is validly formatted,
+    //          will then as for a validly formatted PIN, sending to handlePin().
     public void handleCard(Purchase pch) {
+        System.out.println("\nPlease enter your card number (12 digits) or enter "
+                + "\"back\" to return to the previous menu:");
         String customerCardNumber = handleInputScanner();
 
-        System.out.println("\nPlease enter your card number (12 digits): ");
-
         if (customerCardNumber.length() == 12) {
-            System.out.println("\nPlease enter your PIN (4 digits): ");
-            String customerCardPin = handleInputScanner();
-
-            if (customerCardPin.length() == 4) {
-                printPinSuccessMessage(pch);
-            } else {
-                printPinFailureMessage();
-                handleCard(pch);
-            }
+            handlePin(pch);
+        } else if (customerCardNumber.equals("back")) {
+            handleTotal();
         } else {
             System.out.println("\n\tThe card number you provided is invalidly formatted.");
+            System.out.println("\t(" + customerCardNumber.length() + " provided, 12 needed)");
             System.out.println("\tYou will be returned to the previous step.");
             handleCard(pch);
         }
     }
 
-    // todo: docs
+    // EFFECTS: asks the user for a PIN, ending the program and printing a success message if the PIN provided is
+    //          validly formatted.
+    public void handlePin(Purchase pch) {
+        System.out.println("\nPlease enter your PIN (4 digits) or \"back\":");
+        String customerCardPin = handleInputScanner();
+
+        if (customerCardPin.equals("back")) {
+            handleCard(pch);
+        } else if (customerCardPin.length() == 4) {
+            printPinSuccessMessage(pch);
+        } else {
+            printPinFailureMessage();
+            handlePin(pch);
+        }
+    }
+
+    // MODIFIES: allProductsList
+    // EFFECTS: Loads all products to the master list. Can be printed to terminal using printCatalogue().
     public void loadAllProductsList() {
         Product apples = new Product("apples", 2000, 2.00);
         Product oranges = new Product("oranges", 2001, 3.00);
@@ -219,8 +237,7 @@ public class PointOfSale extends PointOfSaleTool {
         allProductsList.addProduct(watermelon);
         allProductsList.addProduct(paperBag);
         allProductsList.addProduct(canvasBag);
-
-        // This method likely has awful O(n) but works for a small ProductList
+        // This method likely struggles for a large list but works for a small ProductList
     }
 
     public static void main(String[] args) {
