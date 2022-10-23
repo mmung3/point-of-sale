@@ -6,6 +6,7 @@ import model.Purchase;
 
 import java.util.ArrayList;
 
+// todo: correctly formatted (think /*) class level comment (and more for the other classes)
 // The Main class for this project, handling the majority of actions that the user will see on the UI.
 public class PointOfSale extends PointOfSaleTool {
 
@@ -24,6 +25,7 @@ public class PointOfSale extends PointOfSaleTool {
         while (running) {
             String command = handleInputScanner();
 
+            // todo: proper try-catch documentation based off of module C
             try { // try converting the user input to an int if it is an ID
                 int intInput = Integer.parseInt(command);
                 understandId(intInput);
@@ -114,8 +116,8 @@ public class PointOfSale extends PointOfSaleTool {
             if (!foundItem) { // could not find the ID
                 printRemoveFailureMessage(userIdToRemove);
             }
-        } catch (NumberFormatException e) { // otherwise, it is a command
-            System.out.println("\n\t Invalid ID, try again: ");
+        } catch (NumberFormatException e) { // exit remove mode upon failure
+            System.out.println("\n\tCould not find any item with that ID, leaving [REMOVE MODE]");
         }
         printAfterActionMessage();
     }

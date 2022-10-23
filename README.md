@@ -24,4 +24,12 @@ wish to purchase
 correctly based on a cash amount I will give
 - as a user, I want to enter a validly formatted card
 number and PIN to complete the purchase
-
+- as a user, I want to be able to save my entire list of items
+so that, if I wanted, I could come back with more items, or
+come back with a different or new payment method 
+(*for example, I left my wallet in the car, 
+or I need to go grab an extra can of beans
+all the day down in aisle 15*). 
+- as a user, I want to be able to enter my shopper ID and
+have the in-progress purchase associated with my account
+made active again.
