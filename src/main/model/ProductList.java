@@ -1,8 +1,12 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
-public class ProductList {
+public class ProductList implements Writable {
 
     private final ArrayList<Product> productList;
 
@@ -49,6 +53,28 @@ public class ProductList {
     public Product getProductFromIdIndex(int index) {
         return productList.get(index);
     }
+
+
+    // JSON CONTENT ===
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Products", productsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns products in this productList as a JSONArray
+    private JSONArray productsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Product product : productList) {
+            jsonArray.put(product.toJson());
+        }
+
+        return jsonArray;
+    }
+
 
     // GETTERS ====
 

@@ -30,6 +30,5 @@ come back with a different or new payment method
 (*for example, I left my wallet in the car, 
 or I need to go grab an extra can of beans
 all the day down in aisle 15*). 
-- as a user, I want to be able to enter my shopper ID and
-have the in-progress purchase associated with my account
-made active again.
+- as a user, I want to see an in-progress purchase
+be made active again.

@@ -3,14 +3,24 @@ package ui;
 import model.Product;
 import model.ProductList;
 import model.Purchase;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
-// todo: correctly formatted (think /*) class level comment (and more for the other classes)
-// The Main class for this project, handling the majority of actions that the user will see on the UI.
+// The main class for this project, handling the majority of actions that the user will see on the UI.
 public class PointOfSale extends PointOfSaleTool {
 
+    private static final String JSON_STORE = "./data/productList.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
     public PointOfSale() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+
         loadAllProductsList();
         welcomeMessage();
         handleUserCommand();
@@ -25,7 +35,6 @@ public class PointOfSale extends PointOfSaleTool {
         while (running) {
             String command = handleInputScanner();
 
-            // todo: proper try-catch documentation based off of module C
             try { // try converting the user input to an int if it is an ID
                 int intInput = Integer.parseInt(command);
                 understandId(intInput);
@@ -39,26 +48,24 @@ public class PointOfSale extends PointOfSaleTool {
     // EFFECTS: handles the command given, distributing to helper functions as necessary
     public void understandCommand(String command) {
         if (command.length() > 0) {
-            switch (command) {
-                case REMOVE_CMD:
-                    handleRemove();
-                    break;
-                case HELP_CMD:
-                    printHelp();
-                    break;
-                case TOTAL_CMD:
-                    handleTotal();
-                    break;
-                case CATALOGUE_CMD:
-                    printCatalogue();
-                    printAfterActionMessage();
-                    break;
-                case QUIT_CMD:
-                    System.out.println("\nQuitting...");
-                    running = false;
-                    break;
-                default:
-                    System.out.println("\n\t Invalid command, try again: ");
+            if (command.equals(REMOVE_CMD)) {
+                handleRemove();
+            } else if (command.equals(HELP_CMD)) {
+                printHelp();
+            } else if (command.equals(TOTAL_CMD)) {
+                handleTotal();
+            } else if (command.equals(CATALOGUE_CMD)) {
+                printCatalogue();
+                printAfterActionMessage();
+            } else if (command.equals(SAVE_CMD)) {
+                handleSave();
+            } else if (command.equals(LOAD_CMD)) {
+                handleLoad();
+            } else if (command.equals(QUIT_CMD)) {
+                System.out.println("\n Quitting...");
+                running = false;
+            } else {
+                System.out.println("\n\t Invalid command, try again: ");
             }
         }
     }
@@ -237,6 +244,34 @@ public class PointOfSale extends PointOfSaleTool {
         allProductsList.addProduct(paperBag);
         allProductsList.addProduct(canvasBag);
         // This method likely struggles for a large list but works for a small ProductList
+    }
+
+
+    // JSON CONTENT ===
+
+    // EFFECTS: saves the workroom to file
+    private void handleSave() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(userProductList);
+            jsonWriter.close();
+            System.out.println("\n\tSaved your list of products to " + JSON_STORE);
+            printAfterActionMessage();
+        } catch (FileNotFoundException e) {
+            System.out.println("\n\tUnable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void handleLoad() {
+        try {
+            userProductList = jsonReader.read();
+            System.out.println("\n\tLoaded your list of products from " + JSON_STORE);
+            printOrderSoFarMessage();
+        } catch (IOException e) {
+            System.out.println("\n\tUnable to read from file: " + JSON_STORE);
+        }
     }
 
     public static void main(String[] args) {

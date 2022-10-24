@@ -11,11 +11,13 @@ import java.util.Scanner;
 public class PointOfSaleTool {
 
     // constants made protected to allow implementation across both UI classes
+    protected static final String HELP_CMD = "help";
+    protected static final String CATALOGUE_CMD = "catalogue";
     protected static final String REMOVE_CMD = "remove";
     protected static final String TOTAL_CMD = "total";
-    protected static final String CATALOGUE_CMD = "catalogue";
+    protected static final String SAVE_CMD = "save";
+    protected static final String LOAD_CMD = "load";
     protected static final String QUIT_CMD = "quit";
-    protected static final String HELP_CMD = "help";
 
     protected static final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -57,6 +59,13 @@ public class PointOfSaleTool {
                 + df.format(productToRemove.getPrice()));
         System.out.println("Your order so far: " + userProductList.getNameList()
                 + " | Total: $" + df.format(userProductList.getTotal()));
+    }
+
+    // EFFECTS: prints out the list of products that the user has ordered so far with the total.
+    protected void printOrderSoFarMessage() {
+        System.out.println("\tYour order so far: " + userProductList.getNameList()
+                + " | Total: $" + df.format(userProductList.getTotal()));
+        printAfterActionMessage();
     }
 
     // EFFECTS: prints out the designated message when a product fails to be removed from the ProductList
@@ -133,6 +142,8 @@ public class PointOfSaleTool {
         System.out.println("\t \t Type any valid 4-digit ID to add the item to your order.");
         System.out.println("\t Type \"" + REMOVE_CMD + "\" to remove items from your order.");
         System.out.println("\t Type \"" + TOTAL_CMD + "\" to finalize your order.");
+        System.out.println("\t Type \"" + SAVE_CMD + "\" to save your order to file");
+        System.out.println("\t Type \"" + LOAD_CMD + "\" to load your order from a file");
         System.out.println("\t Type \"" + QUIT_CMD + "\" to quit.\n");
     }
 
