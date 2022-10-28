@@ -174,7 +174,7 @@ class ProductListTest {
 
     @Test
     public void testGetProductFromIndex() {
-        assertEquals(apples.getName(), allProductsList.getProductFromIdIndex(0).getName());
-        assertEquals(0.1, allProductsList.getProductFromIdIndex(5).getPrice());
+        assertEquals(apples.getName(), allProductsList.getProductFromIndex(0).getName());
+        assertEquals(0.1, allProductsList.getProductFromIndex(5).getPrice());
     }
 }

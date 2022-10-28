@@ -83,7 +83,7 @@ public class PointOfSale extends PointOfSaleTool {
             if (userId == itemId) { // i.e. does the ID the user gave match one in the full catalogue
                 foundItem = true;
                 int index = allProductsIdOnly.indexOf(itemId);
-                productToAdd = allProductsList.getProductFromIdIndex(index);
+                productToAdd = allProductsList.getProductFromIndex(index);
                 userProductList.addProduct(productToAdd);
 
                 printAddSuccessMessage(productToAdd);
@@ -113,7 +113,7 @@ public class PointOfSale extends PointOfSaleTool {
                 if (userIdToRemove == itemId) {
                     foundItem = true;
                     int index = allUserIdOnly.indexOf(itemId);
-                    Product productToRemove = userProductList.getProductFromIdIndex(index);
+                    Product productToRemove = userProductList.getProductFromIndex(index);
                     userProductList.removeProduct(productToRemove);
 
                     printRemoveSuccessMessage(productToRemove);

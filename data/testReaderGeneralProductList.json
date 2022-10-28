@@ -1,0 +1,27 @@
+{"Products": [
+    {
+        "price": 3,
+        "name": "oranges",
+        "id": 2001
+    },
+    {
+        "price": 5.75,
+        "name": "banana",
+        "id": 2003
+    },
+    {
+        "price": 14,
+        "name": "watermelon",
+        "id": 2004
+    },
+    {
+        "price": 0.1,
+        "name": "paper bag",
+        "id": 1001
+    },
+    {
+        "price": 0.1,
+        "name": "paper bag",
+        "id": 1001
+    }
+]}

@@ -19,6 +19,11 @@ public class ProductList implements Writable {
         return productList;
     }
 
+    // EFFECTS: returns the size of the array
+    public int getSize() {
+        return productList.size();
+    }
+
     // EFFECTS: calculates the sum of a given list of items
     public double getTotal() {
         double totalSoFar = 0;
@@ -50,7 +55,7 @@ public class ProductList implements Writable {
     }
 
     // EFFECTS: returns a Product associated with a given index
-    public Product getProductFromIdIndex(int index) {
+    public Product getProductFromIndex(int index) {
         return productList.get(index);
     }
 
@@ -74,9 +79,6 @@ public class ProductList implements Writable {
 
         return jsonArray;
     }
-
-
-    // GETTERS ====
 
     // EFFECTS: adds a product to the list of Products
     public void addProduct(Product product) {

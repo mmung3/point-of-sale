@@ -5,7 +5,9 @@ import org.json.JSONObject;
 
 
 /*
- * The code within this package (Writable, JsonWriter, JsonReader) all take inspiration from:
+ * The code within this package (Writable, JsonWriter, JsonReader)
+ * and the associated testing files (JsonReaderTest, JsonTest, JsonWriterTest)
+ * all take inspiration from:
  *
  *    Project Name: JsonSerializationDemo
  *    Author: Paul Carter
@@ -14,6 +16,7 @@ import org.json.JSONObject;
  *    Availability: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
  *
  */
+
 
 // Interface that stores the toJson() method to implement
 public interface Writable {

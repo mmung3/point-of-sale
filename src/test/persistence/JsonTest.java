@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JsonTest {
 
     // EFFECTS: checks if a given Product is equivalent to the given parameters
-    protected void checkProduct(String name, int id, double price, Product product) {
+    protected void checkProduct(double price, String name, int id, Product product) {
+        assertEquals(price, product.getPrice());
         assertEquals(name, product.getName());
         assertEquals(id, product.getId());
-        assertEquals(price, product.getPrice());
     }
 }
