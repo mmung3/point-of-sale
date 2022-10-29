@@ -63,6 +63,7 @@ public class ProductList implements Writable {
     // JSON CONTENT ===
 
     @Override
+    // EFFECTS: returns this as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Products", productsToJson());

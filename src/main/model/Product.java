@@ -16,6 +16,7 @@ public class Product implements Writable {
     }
 
     @Override
+    // EFFECTS: returns this as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);

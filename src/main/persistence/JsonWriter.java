@@ -23,7 +23,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of productList to file
     public void write(ProductList productList) {
         JSONObject json = productList.toJson();
         saveToFile(json.toString(TAB)); // i.e. an indent's worth for extra spacing

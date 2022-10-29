@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
+// Represents a reader that reads JSON representation of ProductList from a file
 public class JsonReader {
     private String source;
 

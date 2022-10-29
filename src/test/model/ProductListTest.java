@@ -63,6 +63,7 @@ class ProductListTest {
         productNameList.add("apples");
 
         assertEquals(productNameList, oneItem.getNameList());
+        assertEquals(4, fourItems.getSize());
     }
 
     @Test

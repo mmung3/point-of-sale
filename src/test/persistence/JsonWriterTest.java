@@ -5,16 +5,15 @@ import model.ProductList;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests involving the JsonWriter class in the persistence package
 public class JsonWriterTest extends JsonTest {
 
     @Test
     void testWriterInvalidFile() {
         try {
-            ProductList productList = new ProductList();
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
