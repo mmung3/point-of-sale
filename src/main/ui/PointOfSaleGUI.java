@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 
 public class PointOfSaleGUI extends JFrame {
@@ -17,23 +18,26 @@ public class PointOfSaleGUI extends JFrame {
     private static final int WIDTH = 850;
     private static final int HEIGHT = 600;
 
-    private Product apples = new Product("apples", 2000, 2.00);
-    private Product oranges = new Product("oranges", 2001, 3.00);
-    private Product pears = new Product("pears", 2002, 4.50);
-    private Product banana = new Product("banana", 2003, 5.75);
-    private Product watermelon = new Product("watermelon", 2004, 14.00);
-    private Product paperBag = new Product("paper bag", 1001, 0.10);
-    private Product canvasBag = new Product("canvas bag", 1002, 0.25);
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+
+    private final Product apples = new Product("apples", 2000, 2.00);
+    private final Product oranges = new Product("oranges", 2001, 3.00);
+    private final Product pears = new Product("pears", 2002, 4.50);
+    private final Product banana = new Product("banana", 2003, 5.75);
+    private final Product watermelon = new Product("watermelon", 2004, 14.00);
+    private final Product paperBag = new Product("paper bag", 1001, 0.10);
+    private final Product canvasBag = new Product("canvas bag", 1002, 0.25);
 
     private ProductList pl;
 
-    private JLabel topText;
+    private final JLabel topText;
     private JTextArea productListDisplay;
+    private JTextArea totalDisplay;
 
     private static final String JSON_FILE_PATH = "./data/productList.json";
     private static final String THANK_YOU_FILE_PATH = "./data/thankYou.jpg";
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
 
     public PointOfSaleGUI() {
         super("Point of Sale");
@@ -43,7 +47,6 @@ public class PointOfSaleGUI extends JFrame {
         topText = new JLabel("Welcome to the 210 Store");
         topText.setFont(new Font("Default", Font.PLAIN, 32));
         add(topText, BorderLayout.PAGE_START);
-        // keep above
 
         addEventButtons();
         addSaveLoadButtons();
@@ -53,7 +56,6 @@ public class PointOfSaleGUI extends JFrame {
         jsonWriter = new JsonWriter(JSON_FILE_PATH);
         jsonReader = new JsonReader(JSON_FILE_PATH);
 
-        // keep below
         pack();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(WIDTH, HEIGHT));
@@ -68,6 +70,7 @@ public class PointOfSaleGUI extends JFrame {
         eventPanel.setLayout(new GridLayout(3, 1));
         eventPanel.add(new JButton(new AddBagAction()));
         eventPanel.add(new JButton(new RemoveItemAction()));
+        eventPanel.add(addTotalJTextArea());
 
         this.add(eventPanel, BorderLayout.EAST);
     }
@@ -83,18 +86,20 @@ public class PointOfSaleGUI extends JFrame {
     }
 
     private void addEndPurchaseButton() {
-        JPanel saveLoadPanel = new JPanel();
-//        saveLoadPanel.setLayout(new GridLayout(1, 1));
-        saveLoadPanel.add(new JButton(new EndPurchaseAction()));
+        JPanel endPurchasePanel = new JPanel();
+        endPurchasePanel.add(new JButton(new EndPurchaseAction()));
 
-        this.add(saveLoadPanel, BorderLayout.SOUTH);
+        this.add(endPurchasePanel, BorderLayout.SOUTH);
     }
+
+    // Methods for Display of the List of Products so far =====
 
     private void addListOfPurchaseDisplay() {
         productListDisplay = new JTextArea();
+        productListDisplay.setFont(new Font("Default", Font.PLAIN, 20));
         productListDisplay.setEditable(false);
 
-        productListDisplay.setText(productListToString());
+        updateProductList();
 
         JScrollPane scrollPane = new JScrollPane(productListDisplay);
 
@@ -103,10 +108,12 @@ public class PointOfSaleGUI extends JFrame {
 
     private String productListToString() {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
-        for (String productName : pl.getNameList()) {
-            sb.append(productName);
+        for (int i = 0; i < pl.getSize(); i++) {
+            Product product = pl.getProductFromIndex(i);
+            sb.append("ID").append(product.getId()).append(" : ").append(product.getName().toUpperCase()).append(
+                    "  ..............................  $").append(df.format(product.getPrice()));
             sb.append("\n");
         }
 
@@ -114,8 +121,40 @@ public class PointOfSaleGUI extends JFrame {
     }
 
     private void updateProductList() {
-        productListDisplay.setText(productListToString());
+        productListDisplay.setText("\n" + productListToString());
         repaint();
+    }
+
+    // Displaying the Totaling Panel =====
+
+    private JTextArea addTotalJTextArea() {
+        totalDisplay = new JTextArea();
+        totalDisplay.setFont(new Font("Default", Font.BOLD, 32));
+        totalDisplay.setEditable(false);
+
+        updateTotal();
+
+        return totalDisplay;
+
+    }
+
+    private void updateTotal() {
+
+        String totalToString;
+
+        try {
+            totalToString = df.format(pl.getTotal());
+        } catch (NumberFormatException e) {
+            totalToString = "Internal Error:\nNumberFormatException";
+        }
+
+        totalDisplay.setText("\n TOTAL:\n $" + totalToString);
+        repaint();
+    }
+
+    private void updateAll() {
+        updateProductList();
+        updateTotal();
     }
 
 
@@ -131,7 +170,7 @@ public class PointOfSaleGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             pl.addProduct(paperBag);
             topText.setText("Added: " + paperBag.getName() + ".");
-            updateProductList();
+            updateAll();
         }
     }
 
@@ -147,7 +186,7 @@ public class PointOfSaleGUI extends JFrame {
                 Product productToRemove = pl.getProductFromIndex(pl.getSize() - 1);
                 pl.removeProduct(productToRemove);
                 topText.setText("Removed most recent item: " + productToRemove.getName());
-                productListDisplay.setText(productListToString());
+                updateAll();
             } catch (IndexOutOfBoundsException exception) {
                 topText.setText("No more items to remove.");
             }
@@ -163,7 +202,7 @@ public class PointOfSaleGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             handleSave();
-            updateProductList();
+            updateAll();
         }
     }
 
@@ -176,7 +215,7 @@ public class PointOfSaleGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             handleLoad();
-            updateProductList();
+            updateAll();
         }
     }
 
