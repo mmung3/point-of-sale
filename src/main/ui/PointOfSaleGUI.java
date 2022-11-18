@@ -15,7 +15,7 @@ import java.io.IOException;
 public class PointOfSaleGUI extends JFrame {
 
     private static final int WIDTH = 850;
-    private static final int HEIGHT = 500;
+    private static final int HEIGHT = 600;
 
     private Product apples = new Product("apples", 2000, 2.00);
     private Product oranges = new Product("oranges", 2001, 3.00);
@@ -27,7 +27,10 @@ public class PointOfSaleGUI extends JFrame {
 
     private ProductList pl;
 
+    private JLabel topText;
+
     private static final String JSON_STORE = "./data/productList.json";
+    private static final String THANK_YOU_FILE_PATH = "./data/thankYou.jpg";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -36,8 +39,9 @@ public class PointOfSaleGUI extends JFrame {
 
         pl = new ProductList();
 
-        JLabel topText = new JLabel("Welcome to the 210 Store");
-        add(topText, BorderLayout.NORTH);
+        topText = new JLabel("Welcome to the 210 Store");
+        topText.setFont(new Font("Default", Font.PLAIN, 32));
+        add(topText, BorderLayout.PAGE_START);
         // keep above
 
         addEventButtons();
@@ -64,16 +68,17 @@ public class PointOfSaleGUI extends JFrame {
         eventPanel.add(new JButton(new AddBagAction()));
         eventPanel.add(new JButton(new RemoveItemAction()));
 
-        this.add(eventPanel, BorderLayout.WEST);
+        this.add(eventPanel, BorderLayout.EAST);
     }
 
     private void addSaveLoadButtons() {
         JPanel saveLoadPanel = new JPanel();
         saveLoadPanel.setLayout(new GridLayout(3, 1));
+        saveLoadPanel.add(new Container());
         saveLoadPanel.add(new JButton(new SaveAction()));
         saveLoadPanel.add(new JButton(new LoadAction()));
 
-        this.add(saveLoadPanel, BorderLayout.EAST);
+        this.add(saveLoadPanel, BorderLayout.WEST);
     }
 
     private void addEndPurchaseButton() {
@@ -103,6 +108,7 @@ public class PointOfSaleGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             pl.addProduct(paperBag);
+            topText.setText("Added: " + paperBag.getName() + ".");
         }
     }
 
@@ -114,7 +120,13 @@ public class PointOfSaleGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            pl.removeProduct(pl.getProductFromIndex(pl.getSize() - 1));
+            try {
+                Product productToRemove = pl.getProductFromIndex(pl.getSize() - 1);
+                pl.removeProduct(productToRemove);
+                topText.setText("Removed most recent item: " + productToRemove.getName());
+            } catch (IndexOutOfBoundsException exception) {
+                topText.setText("No more items to remove.");
+            }
         }
     }
 
@@ -150,8 +162,19 @@ public class PointOfSaleGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("display ty graphic"); // todo
+            addThankYouImage();
+            topText.setText("Thank you for shopping!");
         }
+    }
+
+    private void addThankYouImage() {
+        ImageIcon thankYouImage = new ImageIcon(THANK_YOU_FILE_PATH);
+
+        JPanel thankYouPanel = new JPanel();
+        JLabel imageAsLabel = new JLabel(thankYouImage);
+
+        thankYouPanel.add(imageAsLabel);
+        this.add(thankYouPanel, BorderLayout.CENTER);
     }
 
     // JSON Content =====
@@ -161,19 +184,18 @@ public class PointOfSaleGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(pl);
             jsonWriter.close();
-            System.out.println("\n\tSaved your list of products to " + JSON_STORE);
+            topText.setText("Saved your list of products to " + JSON_STORE);
         } catch (FileNotFoundException e) {
-            System.out.println("\n\tUnable to write to file: " + JSON_STORE); //todo convert to notifs
+            topText.setText("Unable to write to file: " + JSON_STORE);
         }
     }
 
     private void handleLoad() {
         try {
             pl = jsonReader.read();
-            System.out.println("\n\tLoaded your list of products from " + JSON_STORE);
-            // printOrderSoFarMessage();
+            topText.setText("Loaded your list of products from " + JSON_STORE);
         } catch (IOException e) {
-            System.out.println("\n\tUnable to read from file: " + JSON_STORE);
+            topText.setText("Unable to read from file: " + JSON_STORE);
         }
     }
 

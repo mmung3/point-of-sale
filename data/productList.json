@@ -1,12 +1,17 @@
 {"Products": [
     {
-        "price": 2,
-        "name": "apples",
-        "id": 2000
+        "price": 0.1,
+        "name": "paper bag",
+        "id": 1001
     },
     {
-        "price": 3,
-        "name": "oranges",
-        "id": 2001
+        "price": 0.1,
+        "name": "paper bag",
+        "id": 1001
+    },
+    {
+        "price": 0.1,
+        "name": "paper bag",
+        "id": 1001
     }
 ]}
