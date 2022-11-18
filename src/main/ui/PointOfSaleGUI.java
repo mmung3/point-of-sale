@@ -28,8 +28,9 @@ public class PointOfSaleGUI extends JFrame {
     private ProductList pl;
 
     private JLabel topText;
+    private JTextArea productListDisplay;
 
-    private static final String JSON_STORE = "./data/productList.json";
+    private static final String JSON_FILE_PATH = "./data/productList.json";
     private static final String THANK_YOU_FILE_PATH = "./data/thankYou.jpg";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -49,8 +50,8 @@ public class PointOfSaleGUI extends JFrame {
         addEndPurchaseButton();
         addListOfPurchaseDisplay();
 
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_FILE_PATH);
+        jsonReader = new JsonReader(JSON_FILE_PATH);
 
         // keep below
         pack();
@@ -90,12 +91,33 @@ public class PointOfSaleGUI extends JFrame {
     }
 
     private void addListOfPurchaseDisplay() {
-        JPanel eventPanel = new JPanel();
-        eventPanel.setLayout(new GridLayout(3, 1));
-        // todo: add something here
+        productListDisplay = new JTextArea();
+        productListDisplay.setEditable(false);
 
-        this.add(eventPanel, BorderLayout.CENTER);
+        productListDisplay.setText(productListToString());
+
+        JScrollPane scrollPane = new JScrollPane(productListDisplay);
+
+        this.add(scrollPane, BorderLayout.CENTER);
     }
+
+    private String productListToString() {
+
+        StringBuffer sb = new StringBuffer();
+
+        for (String productName : pl.getNameList()) {
+            sb.append(productName);
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    private void updateProductList() {
+        productListDisplay.setText(productListToString());
+        repaint();
+    }
+
 
     // Action Controllers for Buttons =====
 
@@ -109,6 +131,7 @@ public class PointOfSaleGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             pl.addProduct(paperBag);
             topText.setText("Added: " + paperBag.getName() + ".");
+            updateProductList();
         }
     }
 
@@ -124,6 +147,7 @@ public class PointOfSaleGUI extends JFrame {
                 Product productToRemove = pl.getProductFromIndex(pl.getSize() - 1);
                 pl.removeProduct(productToRemove);
                 topText.setText("Removed most recent item: " + productToRemove.getName());
+                productListDisplay.setText(productListToString());
             } catch (IndexOutOfBoundsException exception) {
                 topText.setText("No more items to remove.");
             }
@@ -139,6 +163,7 @@ public class PointOfSaleGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             handleSave();
+            updateProductList();
         }
     }
 
@@ -151,6 +176,7 @@ public class PointOfSaleGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             handleLoad();
+            updateProductList();
         }
     }
 
@@ -184,18 +210,18 @@ public class PointOfSaleGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(pl);
             jsonWriter.close();
-            topText.setText("Saved your list of products to " + JSON_STORE);
+            topText.setText("Saved your list of products to " + JSON_FILE_PATH);
         } catch (FileNotFoundException e) {
-            topText.setText("Unable to write to file: " + JSON_STORE);
+            topText.setText("Unable to write to file: " + JSON_FILE_PATH);
         }
     }
 
     private void handleLoad() {
         try {
             pl = jsonReader.read();
-            topText.setText("Loaded your list of products from " + JSON_STORE);
+            topText.setText("Loaded your list of products from " + JSON_FILE_PATH);
         } catch (IOException e) {
-            topText.setText("Unable to read from file: " + JSON_STORE);
+            topText.setText("Unable to read from file: " + JSON_FILE_PATH);
         }
     }
 
