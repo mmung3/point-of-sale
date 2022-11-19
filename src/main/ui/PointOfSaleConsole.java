@@ -10,14 +10,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// The main class for this project, handling the majority of actions that the user will see on the UI.
-public class PointOfSale extends PointOfSaleTool {
+// The main class for this project, handling the majority of actions for a console-based output
+public class PointOfSaleConsole extends PointOfSaleConsoleTool {
 
     private static final String JSON_STORE = "./data/productList.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    public PointOfSale() {
+    public PointOfSaleConsole() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
@@ -275,6 +275,6 @@ public class PointOfSale extends PointOfSaleTool {
     }
 
     public static void main(String[] args) {
-        new PointOfSale();
+        new PointOfSaleConsole();
     }
 }

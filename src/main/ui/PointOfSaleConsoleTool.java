@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 import java.util.Scanner;
 
 // Supporting methods for PointOfSale, handling most print statements and some setup declarations
-public class PointOfSaleTool {
+public class PointOfSaleConsoleTool {
 
     // constants made protected to allow implementation across both UI classes
     protected static final String HELP_CMD = "help";
@@ -25,7 +25,7 @@ public class PointOfSaleTool {
     protected boolean running;
     protected ProductList userProductList;
 
-    public PointOfSaleTool() {
+    public PointOfSaleConsoleTool() {
         running = true;
         userProductList = new ProductList();
     }
