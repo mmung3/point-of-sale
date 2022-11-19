@@ -37,14 +37,14 @@ be made active again.
 
 - You can generate the first required event related to adding Xs to a Y by...
 
-**Clicking the "Add a bag ($0.10)" button in the top right.**
-First event adds a paper bag of type Product to a ProductList.
+**Clicking the "Add a bag ($0.10)" OR "Add One Apple ($2.00)" button in the top left.**
+First event adds an item (either an apple or a bag) of type Product to a ProductList.
 
 - You can generate the second required event related to adding Xs to a Y by...
 
-**Clicking the "Remove Most Recent Item" button near the middle right.**
+**Clicking the "Remove Most Recent Item" button in the bottom left.**
 Note that this requires an item to be in the ProductList already. Try adding
-a few bags first to test this second event.
+a few bags or an apple first to test this second event.
 
 - You can locate my visual component by...
 
@@ -53,11 +53,11 @@ This will display a thank-you message and display a thank-you graphic on screen.
 
 - You can save the state of my application by...
 
-**Clicking the "Save Purchase to File" button near the middle left.**
+**Clicking the "Save Purchase to File" button near the top right.**
 
 - You can reload the state of my application by...
 
-**Clicking the "Load Purchase from File" button near the bottom left.**
+**Clicking the "Load Purchase from File" button near the middle right.**
 
 #
 

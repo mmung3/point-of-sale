@@ -20,7 +20,7 @@ public class PointOfSaleGUI extends JFrame {
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
-    private final Product apples = new Product("apples", 2000, 2.00);
+    private final Product apple = new Product("apple", 2000, 2.00);
     private final Product oranges = new Product("oranges", 2001, 3.00);
     private final Product pears = new Product("pears", 2002, 4.50);
     private final Product banana = new Product("banana", 2003, 5.75);
@@ -51,8 +51,8 @@ public class PointOfSaleGUI extends JFrame {
         topText.setFont(new Font("Default", Font.PLAIN, 32));
         add(topText, BorderLayout.PAGE_START);
 
-        addEventButtonsAndTotal();
-        addSaveLoadButtons();
+        addEastPanelButtons();
+        addWestPanelButtons();
         addEndPurchaseButton();
         addListOfPurchaseDisplay();
 
@@ -69,28 +69,31 @@ public class PointOfSaleGUI extends JFrame {
     // Adding Various Button Grids =====
 
     // MODIFIES: this
-    // EFFECTS: Adds 3 elements along the rightmost border: a button to add a bag, a button to remove items
+    // EFFECTS: Adds 3 elements along the rightmost border: buttons to save and load to a JSON file
     //          and the area where the users' total will be displayed.
-    private void addEventButtonsAndTotal() {
-        JPanel eventPanel = new JPanel();
-        eventPanel.setLayout(new GridLayout(3, 1));
-        eventPanel.add(new JButton(new AddBagAction()));
-        eventPanel.add(new JButton(new RemoveItemAction()));
-        eventPanel.add(initTotalDisplay());
+    private void addEastPanelButtons() {
+        JPanel eastPanel = new JPanel();
+        eastPanel.setLayout(new GridLayout(3, 1));
+        eastPanel.add(new JButton(new SaveAction()));
+        eastPanel.add(new JButton(new LoadAction()));
 
-        this.add(eventPanel, BorderLayout.EAST);
+        eastPanel.add(initTotalDisplay());
+
+        this.add(eastPanel, BorderLayout.EAST);
     }
 
     // MODIFIES: this
-    // EFFECTS: Adds the buttons which save/load data to JSON files along the leftmost border
-    private void addSaveLoadButtons() {
-        JPanel saveLoadPanel = new JPanel();
-        saveLoadPanel.setLayout(new GridLayout(3, 1));
-        saveLoadPanel.add(new Container());
-        saveLoadPanel.add(new JButton(new SaveAction()));
-        saveLoadPanel.add(new JButton(new LoadAction()));
+    // EFFECTS: Adds 3 buttons: one to add an apple, one to add a bag, and one to remove the most
+    //          recent item
+    private void addWestPanelButtons() {
+        JPanel westPanel = new JPanel();
+        westPanel.setLayout(new GridLayout(4, 1));
+        westPanel.add(new JButton(new AddAppleAction()));
+        westPanel.add(new JButton(new AddBagAction()));
+        westPanel.add(new Container());
+        westPanel.add(new JButton(new RemoveItemAction()));
 
-        this.add(saveLoadPanel, BorderLayout.WEST);
+        this.add(westPanel, BorderLayout.WEST);
     }
 
     // MODIFIES: this
@@ -215,6 +218,25 @@ public class PointOfSaleGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             productList.addProduct(paperBag);
             topText.setText("Added: " + paperBag.getName() + ".");
+            updateAll();
+        }
+    }
+
+    // class which handles processes when the apple button is pressed
+    private class AddAppleAction extends AbstractAction {
+
+        // EFFECTS: constructs a button with the description as given below
+        AddAppleAction() {
+            super("Add One Apple ($2.00)");
+        }
+
+        // MODIFIES: productList, topText
+        // EFFECTS: adds an apple to the user's productList, notifying the user through topText and
+        //          updating the total and productListDisplay
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            productList.addProduct(apple);
+            topText.setText("Added: " + apple.getName() + ".");
             updateAll();
         }
     }
