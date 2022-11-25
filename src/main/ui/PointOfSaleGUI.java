@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.ProductList;
 import model.Product;
 import persistence.JsonReader;
@@ -8,6 +9,8 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -60,10 +63,18 @@ public class PointOfSaleGUI extends JFrame {
         jsonReader = new JsonReader(JSON_FILE_PATH);
 
         pack();
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); // changed from EXIT_ON_CLOSE to make way for listener
         setSize(new Dimension(WIDTH, HEIGHT));
         setLocationRelativeTo(null);
         setVisible(true);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                productList.printLog(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
     }
 
     // Adding Various Button Grids =====

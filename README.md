@@ -59,6 +59,28 @@ This will display a thank-you message and display a thank-you graphic on screen.
 
 **Clicking the "Load Purchase from File" button near the middle right.**
 
+# Phase 4: Task 2
+Fri Nov 25 14:23:04 PST 2022
+
+=== apple added for $2.00 ===
+###
+Fri Nov 25 14:23:04 PST 2022
+
+=== paper bag added for $0.10 ===
+###
+Fri Nov 25 14:23:06 PST 2022
+
+=== apple added for $2.00 ===
+###
+Fri Nov 25 14:23:07 PST 2022
+
+=== apple removed from ProductList ===
+###
+
+# Phase 4: Task 3
+
+
+
 #
 
 *image credit goes to https://www.istockphoto.com/*

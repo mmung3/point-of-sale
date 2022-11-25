@@ -4,11 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ProductList implements Writable {
 
     private final ArrayList<Product> productList;
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public ProductList() {
         productList = new ArrayList<>();
@@ -84,12 +86,20 @@ public class ProductList implements Writable {
     // EFFECTS: adds a product to the list of Products
     public void addProduct(Product product) {
         productList.add(product);
+        EventLog.getInstance().logEvent(new Event("=== " + product.getName()
+                + " added for $" + df.format(product.getPrice()) + " ==="));
     }
 
     // EFFECTS: removes a product from the list of Products
     public void removeProduct(Product product) {
         productList.remove(product);
+        EventLog.getInstance().logEvent(new Event("=== " + product.getName()
+                + " removed from ProductList ==="));
     }
 
-
+    public void printLog(EventLog el) {
+        for (Event event : el) {
+            System.out.println(event.toString() + "\n");
+        }
+    }
 }
