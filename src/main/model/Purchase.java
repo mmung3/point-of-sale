@@ -1,5 +1,6 @@
 package model;
 
+// contains info regarding a purchase that the user may perform, with info regarding cash (with change) or card.
 public class Purchase {
 
     private final boolean card; // determines what method the user is paying by

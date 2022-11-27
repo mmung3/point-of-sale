@@ -7,6 +7,7 @@ import persistence.Writable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+// represents a list of Products that the user can add to over time.
 public class ProductList implements Writable {
 
     private final ArrayList<Product> productList;

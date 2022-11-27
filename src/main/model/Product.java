@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+// Represents a product that a user may wish to purchase with a name, ID and price
 public class Product implements Writable {
     private final String name;
     private final int id;

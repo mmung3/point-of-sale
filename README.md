@@ -124,5 +124,4 @@ would be based off the panel sections (east, west, centre, etc.)
 - *etc.*
 
 #
-
 *image credit goes to https://www.istockphoto.com/*
