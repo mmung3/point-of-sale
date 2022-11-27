@@ -60,6 +60,9 @@ This will display a thank-you message and display a thank-you graphic on screen.
 **Clicking the "Load Purchase from File" button near the middle right.**
 
 # Phase 4: Task 2
+
+***Below is an example output from the log:***
+###
 Fri Nov 25 14:23:04 PST 2022
 
 === apple added for $2.00 ===
@@ -78,8 +81,47 @@ Fri Nov 25 14:23:07 PST 2022
 ###
 
 # Phase 4: Task 3
+*See UML_Design_Diagram.png attached in the 
+root folder of this project.*
 
+Regarding refactoring, I found most classes in the *model*
+package to be fairly cohesive. Some small refactors maybe could
+have been done regarding some strings but this would likely be
+unnecessary overall.
 
+There was, however, a lot of refactoring that could be done
+within the *UI* packages; none of them conform very well to the
+Single-Responsibility Principle, with two classes overall to handle
+the console-based UI and one class to handle all the GUI.
+
+For example, the class *PointOfSaleConsoleTool* could be edited to
+consist of only print statements and have its name changed as such.
+It currently houses all the setup methods needed for the console
+version to function correctly (ex. the lists, the boolean 
+*running*, etc.).
+
+The *PointOfSaleConsole* (not the tool version) could also be refactored in
+a couple of ways, one example being to split it into two main classes:
+- One whose purpose is to 'understand' the user's input
+(ex. convert given ID from string to int)
+- One 'handles' the associated action (ex. removes an 
+item after first searching the list for it)
+
+Or another way could be to split it by the different actions performed, for example:
+- one class for sending the product list to be totalled
+  - with subclasses for a cash or card purchase
+- one class for adding items only
+- one class for removing items
+- *etc.*
+
+The GUI version in *PointOfSaleGUI* could also use some serious refactoring;
+all the code that powers the GUI version is in one class. A good way to split it
+would be based off the panel sections (east, west, centre, etc.)
+- a class for the add/remove methods
+- a class for updating the product list display
+- a class for updating and displaying the total panel
+- a class for any JSON related content
+- *etc.*
 
 #
 
