@@ -84,20 +84,23 @@ public class ProductList implements Writable {
         return jsonArray;
     }
 
-    // EFFECTS: adds a product to the list of Products
+    // MODIFIES: this, EventLog (instance)
+    // EFFECTS: adds a product to the list of Products, logging the name and cost of the item to the EventLog instance
     public void addProduct(Product product) {
         productList.add(product);
         EventLog.getInstance().logEvent(new Event("=== " + product.getName()
                 + " added for $" + df.format(product.getPrice()) + " ==="));
     }
 
-    // EFFECTS: removes a product from the list of Products
+    // MODIFIES: this, EventLog (instance)
+    // EFFECTS: removes a product from the list of Products, logging the name of the item to the EventLog instance
     public void removeProduct(Product product) {
         productList.remove(product);
         EventLog.getInstance().logEvent(new Event("=== " + product.getName()
                 + " removed from ProductList ==="));
     }
 
+    // EFFECTS: prints the full EventLog onto the console (by each event, separated by new lines)
     public void printLog(EventLog el) {
         for (Event event : el) {
             System.out.println(event.toString() + "\n");

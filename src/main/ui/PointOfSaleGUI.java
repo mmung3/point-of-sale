@@ -77,6 +77,7 @@ public class PointOfSaleGUI extends JFrame {
         });
     }
 
+
     // Adding Various Button Grids =====
 
     // MODIFIES: this
