@@ -33,7 +33,7 @@ all the day down in aisle 15*).
 - as a user, I want to see an in-progress purchase
 be made active again.
 
-# Instructions for Grader
+# How to use the GUI
 
 - You can generate the first required event related to adding Xs to a Y by...
 
@@ -59,7 +59,7 @@ This will display a thank-you message and display a thank-you graphic on screen.
 
 **Clicking the "Load Purchase from File" button near the middle right.**
 
-# Phase 4: Task 2
+# Example Logs
 
 ***Below is an example output from the log:***
 ###
@@ -80,7 +80,7 @@ Fri Nov 25 14:23:07 PST 2022
 === apple removed from ProductList ===
 ###
 
-# Phase 4: Task 3
+# Project Discussion
 *See UML_Design_Diagram.png attached in the 
 root folder of this project.*
 
