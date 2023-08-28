@@ -7,7 +7,7 @@ a grocery or convenience store. It will be modelled after
 a **self-checkout** system (for a *customer* to use), 
 although it could also be run by a *human* cashier.
 
-> How to navigate to code?
+> How do I navigate to the code in this repository?
 > - most of the code can be found in the `src` folder, and navigating from there.
 > - `main` includes code for the internal code and GUI
 > - `test` includes `JUnit`-focused collection of tests
