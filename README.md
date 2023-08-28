@@ -9,6 +9,8 @@ although it could also be run by a *human* cashier.
 
 > How to navigate to code?
 > - most of the code can be found in the `src` folder, and navigating from there.
+> - `main` includes code for the internal code and GUI
+> - `test` includes `JUnit`-focused collection of tests
 
 
 ### Inspiration
